@@ -1,5 +1,5 @@
 import { Optional } from "@nestjs/common";
-import { IsNotEmpty, IsNumber, IsString,IsBoolean, MaxLength, IsDate, isNotEmpty, IsObject, IsEmail, IsEmpty, IsArray, isObject } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString,IsBoolean, MaxLength, IsDate, isNotEmpty, IsObject, IsEmail, IsEmpty, IsArray, isObject, IsOptional } from "class-validator";
 import { NodeStyleEventEmitter } from "rxjs/internal/observable/fromEvent";
 import { isUndefined } from "util";
 import { ClientDto } from "./ClientDto";
@@ -41,6 +41,9 @@ export class OrdersDto{
     readonly totalQty:number
     @IsArray()
     readonly detail:OrdersDetailDto[]
+    @IsArray()
+    @IsOptional()
+    readonly payDetail:PayDetail[]
 }
 
 export class OrdersDetailDto{
@@ -57,3 +60,9 @@ export class OrdersDetailDto{
    
 }
 
+export class PayDetail{
+    @IsOptional()
+    readonly amount:number
+    @IsOptional()
+    readonly payType:string
+}

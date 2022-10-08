@@ -1,5 +1,5 @@
 import { Optional } from "@nestjs/common";
-import { IsNotEmpty, IsNumber, IsString,IsBoolean, MaxLength, IsDate, IsArray, IsDateString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString,IsBoolean, MaxLength, IsDate, IsArray, IsDateString, IsOptional } from "class-validator";
 import { IngredientPerServicesDto } from "./ingredientPerServices";
 
 
@@ -17,7 +17,7 @@ export class ServiceDto{
     readonly price:number;
     @IsNumber()
     readonly cost:number;
-    @IsNumber()
+    @IsOptional()
     readonly otherCost:number;
     @IsArray()    
     readonly ingredientPerService:IngredientPerServicesDto[];

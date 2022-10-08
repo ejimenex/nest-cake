@@ -35,6 +35,7 @@ export interface IOrders extends Document{
     readonly totalQty:number
    
     readonly detail:OrdersDetail[]
+    readonly payDetail:PayDetail[]
 }
 
 export class OrdersDetail{
@@ -48,4 +49,8 @@ export class OrdersDetail{
     readonly total:number
    
     readonly totalQty:number
+}
+export class PayDetail{
+    readonly amount:number
+    readonly payType:string
 }

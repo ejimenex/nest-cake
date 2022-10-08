@@ -11,7 +11,7 @@ description:string;
 @Prop()
 cost:number
 @Prop()
-otherCost:number
+otherCost:number=0
 @Prop()
 price:number;
 @Prop()

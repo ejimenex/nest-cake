@@ -80,6 +80,7 @@ this.serviceService.get(id);
 
  @Get("GetPaginated/Data")
  async getPaged(@Res() response,@Query('pageNumber') pageNumber: number,@Query ('filter')filter?:string,@Query ('finished')finished?:boolean,@Query ('email')email?:string){
+  finished=Boolean(finished)
     try{
         const data=await this.serviceService.getAllPaged(pageNumber,filter,email,finished);
         return response.status(HttpStatus.OK).json({data});

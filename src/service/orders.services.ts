@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from "mongoose";
 import { OrdersDto } from 'src/Dto/OrdersDto';
 import { IOrders } from 'src/interface/IOrders';
-import { ClientService } from './client.service';
 @Injectable()
 export class  OrderService {
 constructor(@InjectModel('orders') private serviceModel:Model<IOrders>) { }
@@ -32,12 +31,12 @@ async getAll(email:string): Promise<IOrders[]> {
     return service;
 }
 async getAllPaged(pageNumber:number,filter:string,email:string,finished:boolean): Promise<IOrders[]> {
-  const service = await this.serviceModel.find({name:{$regex: filter, $options: 'i'},email:email,isFinished:finished})
+  const service = await this.serviceModel.find({name:{$regex: filter, $options: 'i'},email:email})
   .sort({name:1})
   .skip( pageNumber > 0 ? ( ( pageNumber - 1 ) * 10 ) : 0 )
              .limit( 10 );
   if (!service || service.length == 0) {
-      throw new NotFoundException('NoData!');
+     return []
   }
   return service;
 }

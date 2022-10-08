@@ -19,7 +19,7 @@ export class AccountService {
 
   async create(AccountDto: AccountDto): Promise<IAccount> {
     let exist = await this.userModel
-      .find({ email: AccountDto.userEmail })
+      .find({ userEmail: AccountDto.userEmail })
       .exec();
     console.log(exist);
     if (exist.length > 0) {

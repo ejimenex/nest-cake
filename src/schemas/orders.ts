@@ -40,6 +40,8 @@ export class Orders  {
     readonly totalQty:number
     @Prop()
     readonly detail:OrdersDetail[]
+    @Prop()
+    readonly payDetail:PayDetail[]
 }
 
 export class OrdersDetail{
@@ -54,5 +56,11 @@ export class OrdersDetail{
     @Prop()
     readonly price:number
 
+}
+export class PayDetail{
+    @Prop()
+    readonly amount:number
+    @Prop()
+    readonly payType:string
 }
 export const OrderSchema = SchemaFactory.createForClass(Orders);
