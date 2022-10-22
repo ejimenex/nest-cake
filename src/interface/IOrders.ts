@@ -21,7 +21,7 @@ export interface IOrders extends Document{
    
 
    
-    readonly isFinished:boolean;
+    readonly isFinished:string;
    
     readonly amountPaid:number
     readonly pendingAmount:number
@@ -33,7 +33,7 @@ export interface IOrders extends Document{
     readonly total:number
    
     readonly totalQty:number
-   
+    readonly invoiceDate:string
     readonly detail:OrdersDetail[]
     readonly payDetail:PayDetail[]
 }

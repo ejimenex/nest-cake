@@ -1,22 +1,22 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 
-import { ClientService } from '../service/client.service';
+import { BillsService } from '../service/bills.service';
 
-import { ClientDto } from '../Dto/ClientDto';
+import { BillsDto } from '../Dto/BillsDto';
 import { LocalAuthGuard } from '../service/auth/local.auth.guard';
 import { JwtAuthGuard } from '../service/auth/jwt.auth.guard';
 @UseGuards(JwtAuthGuard)
-@Controller('client')
+@Controller('bill')
 
-export class ClientController {
-    constructor(private readonly clientService:ClientService){}
+export class BillController {
+    constructor(private readonly billService:BillsService){}
     
     
 @Put('/:id')
 async update(@Res() response,@Param('id') id: string,
-@Body() ClientDto: ClientDto) {
+@Body() BillsDto: BillsDto) {
   try {
-   const existingClients = await this.clientService.update(id, ClientDto);
+   const existingClients = await this.billService.update(id, BillsDto);
   return response.status(HttpStatus.OK).json({
   existingClients,});
  } catch (err) {
@@ -24,15 +24,15 @@ async update(@Res() response,@Param('id') id: string,
  }
 }
     @Post()
-    async create(@Res() response, @Body() dto: ClientDto) {
+    async create(@Res() response, @Body() dto: BillsDto) {
    try {
-     const newService = await this.clientService.create(dto);
+     const newBill = await this.billService.create(dto);
      return response.status(HttpStatus.CREATED).json({
-     newService,});
+     newBill});
   } catch (err) {
      return response.status(HttpStatus.BAD_REQUEST).json({
      statusCode: 400,
-     message: 'Error: Cliente no pudo ser creado!' + err.message,
+     message:  err.message,
      error: 'Bad Request'
   });
   }
@@ -42,9 +42,9 @@ async update(@Res() response,@Param('id') id: string,
 async delete(@Res() response, @Param('id') id: string)
 {
   try {
-    const deletedService = await this.clientService.delete(id);
+    const data = await this.billService.delete(id);
     return response.status(HttpStatus.OK).json({
-    deletedService,});
+    data,});
   }catch (err) {
     return response.status(err.status).json(err.response);
   
@@ -52,10 +52,10 @@ async delete(@Res() response, @Param('id') id: string)
  @Get('/:id')
 async getSystem(@Res() response, @Param('id') id: string) {
  try {
-    const existingClient = await
-this.clientService.get(id);
+    const data = await
+this.billService.get(id);
     return response.status(HttpStatus.OK).json({
-    message: 'Cliente encontrado',existingClient,});
+   data});
  } catch (err) {
    return response.status(err.status).json(err.response);
  }
@@ -63,7 +63,7 @@ this.clientService.get(id);
  @Get('getAll/:email')
  async getService(@Res() response,@Param('email') email: string){
     try{
-        const data=await this.clientService.getAll(email);
+        const data=await this.billService.getAll(email);
         return response.status(HttpStatus.OK).json({
            data
         });
@@ -72,11 +72,10 @@ this.clientService.get(id);
 
  @Get("GetPaginated/Data")
  
- async getPaged(@Res() response,@Query('pageNumber') pageNumber: number,@Query ('filter')filter?:string,@Query ('email') email?:string){
+ async getPaged(@Res() response,@Query('pageNumber') pageNumber: number,@Query ('dateFrom')dateFrom?:string,@Query ('dateTo')dateTo?:string,@Query ('email') email?:string){
     try{
-        const clients=await this.clientService.getAllPaged(pageNumber,filter,email);
-        return response.status(HttpStatus.OK).json({
-            message:`${clients.length} clientes encontrados`,clients
+        const bill=await this.billService.getAllPaged(pageNumber,dateFrom,dateTo,email);
+        return response.status(HttpStatus.OK).json({bill
         });
     }catch(err){return response.status(err.status).json(err.response)}
  }

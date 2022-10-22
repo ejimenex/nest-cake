@@ -34,6 +34,17 @@ import { InventoryIngredientController } from './system/inventoryIngredient.cont
 import { OrderSchema } from './schemas/orders';
 import { OrderService } from './service/orders.services';
 import { OrdersController } from './system/orders.controller';
+import { ProviderSchema } from './schemas/provider';
+import { InvoiceSchema } from './schemas/invoice';
+import { InvoiceService } from './service/invoice.services';
+import { InvoiceController } from './system/invoice.controller';
+import { ProviderController } from './system/provider.controller';
+import { ProviderService } from './service/provider.service';
+import { BillsSchema } from './schemas/bills';
+import { BillsService } from './service/bills.service';
+import { BillController } from './system/bill.controller';
+import { ParameterSchema } from './schemas/parameter';
+import { ParameterService } from './service/parameter.service';
 
 @Module({
   imports: [
@@ -41,7 +52,7 @@ import { OrdersController } from './system/orders.controller';
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '3600s' },
+      signOptions: { expiresIn: '90h' },
     }),
     MongooseModule.forFeature([
       { name: 'ApisMARDOM', schema: SystemsSchema },
@@ -49,9 +60,13 @@ import { OrdersController } from './system/orders.controller';
       { name: 'ingredient', schema: IngredientsSchema },
       { name: 'service', schema: ServicesSchema },
       { name: 'client', schema: ClientSchema },
-      {name:'account',schema:AccountSchema},
-      {name:'orders',schema:OrderSchema},
-      {name:'inventoryIngredient',schema:InventoryIngredientSchema}
+      { name: 'account', schema: AccountSchema },
+      { name: 'orders', schema: OrderSchema },
+      { name: 'inventoryIngredient', schema: InventoryIngredientSchema },
+      { name: 'provider', schema: ProviderSchema },
+      { name: 'invoice', schema: InvoiceSchema },
+      { name: 'bills', schema: BillsSchema },
+      {name:'parameter',schema:ParameterSchema}
     ]),
   ],
   controllers: [
@@ -63,26 +78,33 @@ import { OrdersController } from './system/orders.controller';
     ServicesController,
     AccountController,
     OrdersController,
-    InventoryIngredientController
+    InventoryIngredientController,
+    InvoiceController,
+    ProviderController,
+    BillController
   ],
-  providers: [ 
+  providers: [
     // {
-   // provide: APP_GUARD,
+    // provide: APP_GUARD,
     //useClass: JwtAuthGuard,
-  //},
+    //},
     AccountService,
     AppService,
     SystemService,
     ClientService,
+    InvoiceService,
+    BillsService,
     UnitOfMeasureService,
     IngredientService,
+    ParameterService,
     ServicesService,
     LocalStrategy,
     LocalAuthGuard,
     JwtStrategy,
     JwtAuthGuard,
     OrderService,
-    InventoryIngredientService
-  ]
+    InventoryIngredientService,
+    ProviderService,
+  ],
 })
 export class AppModule {}

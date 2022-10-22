@@ -18,7 +18,9 @@ import { AccountDto, AccountLoginDto } from '../Dto/AccountDto';
 import { JwtAuthGuard } from '../service/auth/jwt.auth.guard';
 import { LocalAuthGuard } from '../service/auth/local.auth.guard';
 import { LocalStrategy } from '../service/auth/local.strategy';
+import { TestInterceptor } from 'src/service/testInterceptor';
 @Controller('account')
+@UseInterceptors(TestInterceptor)
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 

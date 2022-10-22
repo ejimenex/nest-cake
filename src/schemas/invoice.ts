@@ -4,7 +4,7 @@ import { ingredientPerService } from './ingredientPerService';
 import { Services } from './services';
 
 @Schema()
-export class Orders  {
+export class Invoice  {
 
     @Prop()
     readonly client:Client;
@@ -24,8 +24,7 @@ export class Orders  {
     readonly email:string;
     @Prop()
 
-    @Prop()
-    readonly isFinished:string;
+
     @Prop()
     readonly amountPaid:number
     @Prop()
@@ -38,6 +37,8 @@ export class Orders  {
     readonly total:number
     @Prop()
     readonly totalQty:number
+    @Prop()
+    readonly invoiceDate:string
     @Prop()
     readonly detail:OrdersDetail[]
     @Prop()
@@ -63,4 +64,4 @@ export class PayDetail{
     @Prop()
     readonly payType:string
 }
-export const OrderSchema = SchemaFactory.createForClass(Orders);
+export const InvoiceSchema = SchemaFactory.createForClass(Invoice);

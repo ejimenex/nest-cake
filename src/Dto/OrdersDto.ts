@@ -18,6 +18,9 @@ export class OrdersDto{
    
     readonly ordersDate:string;
     @IsString()
+    @IsOptional()
+    readonly invoiceDate:string='';
+    @IsString()
    
     readonly commentary:string;
     @IsString()
@@ -25,8 +28,8 @@ export class OrdersDto{
     readonly ordersNumber:string;
     @IsString()
     readonly email:string;
-    @IsBoolean()
-    readonly isFinished:boolean;
+    @IsString()
+    readonly isFinished:string;
     @IsNumber()
     readonly amountPaid:number
     @IsNumber()
